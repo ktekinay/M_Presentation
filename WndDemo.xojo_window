@@ -1,5 +1,5 @@
 #tag Window
-Begin Window WndDemo
+Begin MirroredWindowBase WndDemo
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   True
@@ -23,7 +23,7 @@ Begin Window WndDemo
    MinWidth        =   64
    Placement       =   0
    Resizeable      =   True
-   Title           =   "Untitled"
+   Title           =   "My Demo"
    Visible         =   True
    Width           =   600
    Begin M_Presentation.PresentationTabPanel PresentationTabPanel1
