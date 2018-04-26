@@ -11,6 +11,11 @@ Inherits Window
 		    GhostUpdater = nil
 		  end if
 		  
+		  if GhostScaler isa ScaleWindow then
+		    GhostScaler.Close
+		    GhostScaler = nil
+		  end if
+		  
 		  if Ghost isa GhostWindow then
 		    Ghost.Close
 		    Ghost = nil
@@ -22,6 +27,9 @@ Inherits Window
 	#tag Event
 		Sub Open()
 		  Ghost = new GhostWindow
+		  
+		  GhostScaler = new ScaleWindow
+		  GhostScaler.Ghost = self.Ghost
 		  
 		  GhostUpdater = new Timer
 		  AddHandler GhostUpdater.Action, WeakAddressOf GhostUpdater_Action
@@ -65,73 +73,42 @@ Inherits Window
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private GhostScaler As ScaleWindow
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private GhostUpdater As Timer
 	#tag EndProperty
 
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="Name"
+			Name="BackColor"
 			Visible=true
-			Group="ID"
-			Type="String"
-			EditorType="String"
+			Group="Background"
+			InitialValue="&hFFFFFF"
+			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Interfaces"
+			Name="Backdrop"
 			Visible=true
-			Group="ID"
-			Type="String"
-			EditorType="String"
+			Group="Background"
+			Type="Picture"
+			EditorType="Picture"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Super"
+			Name="CloseButton"
 			Visible=true
-			Group="ID"
-			Type="String"
-			EditorType="String"
+			Group="Frame"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Width"
-			Visible=true
-			Group="Size"
-			InitialValue="600"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Height"
-			Visible=true
-			Group="Size"
-			InitialValue="400"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MinWidth"
-			Visible=true
-			Group="Size"
-			InitialValue="64"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MinHeight"
-			Visible=true
-			Group="Size"
-			InitialValue="64"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MaxWidth"
-			Visible=true
-			Group="Size"
-			InitialValue="32000"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MaxHeight"
-			Visible=true
-			Group="Size"
-			InitialValue="32000"
-			Type="Integer"
+			Name="Composite"
+			Group="OS X (Carbon)"
+			InitialValue="False"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Frame"
@@ -155,41 +132,9 @@ Inherits Window
 			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Title"
-			Visible=true
-			Group="Frame"
-			InitialValue="Untitled"
-			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="CloseButton"
-			Visible=true
-			Group="Frame"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Resizeable"
-			Visible=true
-			Group="Frame"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MaximizeButton"
-			Visible=true
-			Group="Frame"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MinimizeButton"
-			Visible=true
-			Group="Frame"
-			InitialValue="True"
+			Name="FullScreen"
+			Group="Behavior"
+			InitialValue="False"
 			Type="Boolean"
 			EditorType="Boolean"
 		#tag EndViewProperty
@@ -202,15 +147,17 @@ Inherits Window
 			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Composite"
-			Group="OS X (Carbon)"
+			Name="HasBackColor"
+			Visible=true
+			Group="Background"
 			InitialValue="False"
 			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="MacProcID"
-			Group="OS X (Carbon)"
-			InitialValue="0"
+			Name="Height"
+			Visible=true
+			Group="Size"
+			InitialValue="400"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -222,27 +169,11 @@ Inherits Window
 			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Placement"
+			Name="Interfaces"
 			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="Integer"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - Default"
-				"1 - Parent Window"
-				"2 - Main Screen"
-				"3 - Parent Window Screen"
-				"4 - Stagger"
-			#tag EndEnumValues
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Visible"
-			Visible=true
-			Group="Behavior"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType="Boolean"
+			Group="ID"
+			Type="String"
+			EditorType="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LiveResize"
@@ -252,32 +183,32 @@ Inherits Window
 			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="FullScreen"
-			Group="Behavior"
-			InitialValue="False"
+			Name="MacProcID"
+			Group="OS X (Carbon)"
+			InitialValue="0"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MaxHeight"
+			Visible=true
+			Group="Size"
+			InitialValue="32000"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MaximizeButton"
+			Visible=true
+			Group="Frame"
+			InitialValue="True"
 			Type="Boolean"
 			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="HasBackColor"
+			Name="MaxWidth"
 			Visible=true
-			Group="Background"
-			InitialValue="False"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BackColor"
-			Visible=true
-			Group="Background"
-			InitialValue="&hFFFFFF"
-			Type="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Backdrop"
-			Visible=true
-			Group="Background"
-			Type="Picture"
-			EditorType="Picture"
+			Group="Size"
+			InitialValue="32000"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="MenuBar"
@@ -295,8 +226,84 @@ Inherits Window
 			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Ghost"
+			Name="MinHeight"
+			Visible=true
+			Group="Size"
+			InitialValue="64"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MinimizeButton"
+			Visible=true
+			Group="Frame"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MinWidth"
+			Visible=true
+			Group="Size"
+			InitialValue="64"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Name"
+			Visible=true
+			Group="ID"
+			Type="String"
+			EditorType="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Placement"
+			Visible=true
 			Group="Behavior"
+			InitialValue="0"
+			Type="Integer"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - Default"
+				"1 - Parent Window"
+				"2 - Main Screen"
+				"3 - Parent Window Screen"
+				"4 - Stagger"
+			#tag EndEnumValues
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Resizeable"
+			Visible=true
+			Group="Frame"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Super"
+			Visible=true
+			Group="ID"
+			Type="String"
+			EditorType="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Title"
+			Visible=true
+			Group="Frame"
+			InitialValue="Untitled"
+			Type="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Visible"
+			Visible=true
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Width"
+			Visible=true
+			Group="Size"
+			InitialValue="600"
 			Type="Integer"
 		#tag EndViewProperty
 	#tag EndViewBehavior
