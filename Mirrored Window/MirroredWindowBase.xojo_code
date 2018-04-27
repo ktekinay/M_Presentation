@@ -30,14 +30,15 @@ Inherits Window
 		  
 		  GhostScaler = new ScaleWindow
 		  GhostScaler.Ghost = self.Ghost
+		  GhostScaler.Title = self.Title + " - " + GhostScaler.Title
 		  
 		  GhostUpdater = new Timer
 		  AddHandler GhostUpdater.Action, WeakAddressOf GhostUpdater_Action
 		  GhostUpdater.Period = 1000 / 10
 		  GhostUpdater.Mode = Timer.ModeMultiple
 		  
-		  
 		  RaiseEvent Open()
+		  
 		End Sub
 	#tag EndEvent
 
@@ -48,9 +49,40 @@ Inherits Window
 		  
 		  if Ghost isa GhostWindow then
 		    Ghost.Title = self.Title
-		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    
+		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
+		    
+		    //
+		    // Cursor
+		    //
+		    
+		    const kDiameterMouseUp = 10
+		    const kDiameterMouseDown = kDiameterMouseUp - 6
+		    
+		    dim x as integer = System.MouseX - self.Left
+		    dim y as integer = System.MouseY - self.Top
+		    
+		    if x >= 0 and x <= self.Width and y >= 0 and y <= self.Height then
+		      
+		      dim innerDiameter as integer = if( System.MouseDown, kDiameterMouseDown, kDiameterMouseUp )
+		      
+		      p.Graphics.ForeColor = &cFF000000
+		      p.Graphics.FillOval _
+		      X - ( innerDiameter / 2 ), _
+		      Y - ( innerDiameter / 2 ), _
+		      innerDiameter, _
+		      innerDiameter
+		      
+		      if System.MouseDown then
+		        p.Graphics.DrawOval _
+		        X - ( kDiameterMouseUp / 2 ), _
+		        Y - ( kDiameterMouseUp / 2 ), _
+		        kDiameterMouseUp, _
+		        kDiameterMouseUp
+		      end if
+		    end if
+		    
 		    Ghost.GhostImage = p
 		    Ghost.Invalidate
 		  end if
