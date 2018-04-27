@@ -44,6 +44,35 @@ Inherits Window
 
 
 	#tag Method, Flags = &h21
+		Private Sub DrawCursor(g as Graphics)
+		  dim x as integer = System.MouseX - self.Left
+		  dim y as integer = System.MouseY - self.Top
+		  
+		  if x >= 0 and x <= self.Width and y >= 0 and y <= self.Height then
+		    dim iOvalOffset as Integer = kMouseDiameter / 2 
+		    
+		    g.ForeColor = &cFF000000
+		    g.FillOval _
+		    X - iOvalOffset, _
+		    Y - iOvalOffset, _
+		    kMouseDiameter, _
+		    kMouseDiameter
+		    
+		    if System.MouseDown then
+		      g.PenWidth = kMouseDownDiameter
+		      
+		      g.DrawOval(x - iOvalOffset - (kMouseDownDiameter * 2), _
+		      y - iOvalOffset - (kMouseDownDiameter * 2), _
+		      kMouseDiameter + kMouseDownDiameter * 4, _
+		      kMouseDiameter + kMouseDownDiameter * 4)
+		      
+		      
+		    end if
+		  end if
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
 		Private Sub GhostUpdater_Action(sender As Timer)
 		  #pragma unused sender
 		  
@@ -53,35 +82,8 @@ Inherits Window
 		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
 		    
-		    //
 		    // Cursor
-		    //
-		    
-		    const kDiameterMouseUp = 10
-		    const kDiameterMouseDown = kDiameterMouseUp - 6
-		    
-		    dim x as integer = System.MouseX - self.Left
-		    dim y as integer = System.MouseY - self.Top
-		    
-		    if x >= 0 and x <= self.Width and y >= 0 and y <= self.Height then
-		      
-		      dim innerDiameter as integer = if( System.MouseDown, kDiameterMouseDown, kDiameterMouseUp )
-		      
-		      p.Graphics.ForeColor = &cFF000000
-		      p.Graphics.FillOval _
-		      X - ( innerDiameter / 2 ), _
-		      Y - ( innerDiameter / 2 ), _
-		      innerDiameter, _
-		      innerDiameter
-		      
-		      if System.MouseDown then
-		        p.Graphics.DrawOval _
-		        X - ( kDiameterMouseUp / 2 ), _
-		        Y - ( kDiameterMouseUp / 2 ), _
-		        kDiameterMouseUp, _
-		        kDiameterMouseUp
-		      end if
-		    end if
+		    DrawCursor(p.Graphics)
 		    
 		    Ghost.GhostImage = p
 		    Ghost.Invalidate
@@ -111,6 +113,13 @@ Inherits Window
 	#tag Property, Flags = &h21
 		Private GhostUpdater As Timer
 	#tag EndProperty
+
+
+	#tag Constant, Name = kMouseDiameter, Type = Double, Dynamic = False, Default = \"10", Scope = Private
+	#tag EndConstant
+
+	#tag Constant, Name = kMouseDownDiameter, Type = Double, Dynamic = False, Default = \"6", Scope = Private
+	#tag EndConstant
 
 
 	#tag ViewBehavior
