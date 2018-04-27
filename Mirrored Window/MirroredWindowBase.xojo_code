@@ -30,6 +30,7 @@ Inherits Window
 		  
 		  GhostScaler = new ScaleWindow
 		  GhostScaler.Ghost = self.Ghost
+		  GhostScaler.Title = self.Title + " - " + GhostScaler.Title
 		  
 		  GhostUpdater = new Timer
 		  AddHandler GhostUpdater.Action, WeakAddressOf GhostUpdater_Action
