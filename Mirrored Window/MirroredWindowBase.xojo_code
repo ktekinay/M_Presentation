@@ -36,7 +36,6 @@ Inherits Window
 		  GhostUpdater.Period = 1000 / 10
 		  GhostUpdater.Mode = Timer.ModeMultiple
 		  
-		  
 		  RaiseEvent Open()
 		End Sub
 	#tag EndEvent
@@ -48,8 +47,8 @@ Inherits Window
 		  
 		  if Ghost isa GhostWindow then
 		    Ghost.Title = self.Title
-		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    
+		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
 		    Ghost.GhostImage = p
 		    Ghost.Invalidate
