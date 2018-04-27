@@ -2,6 +2,14 @@
 Class MirroredWindowBase
 Inherits Window
 	#tag Event
+		Sub Activate()
+		  IsActive = true
+		  
+		  RaiseEvent Activate
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub Close()
 		  RaiseEvent Close()
 		  
@@ -25,6 +33,14 @@ Inherits Window
 	#tag EndEvent
 
 	#tag Event
+		Sub Deactivate()
+		  RaiseEvent Deactivate
+		  
+		  IsActive = false
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub Open()
 		  Ghost = new GhostWindow
 		  
@@ -37,6 +53,8 @@ Inherits Window
 		  GhostUpdater.Period = 1000 / 10
 		  GhostUpdater.Mode = Timer.ModeMultiple
 		  
+		  IsActive = true
+		  
 		  RaiseEvent Open()
 		  
 		End Sub
@@ -48,25 +66,27 @@ Inherits Window
 		  dim x as integer = System.MouseX - self.Left
 		  dim y as integer = System.MouseY - self.Top
 		  
-		  if x >= 0 and x <= self.Width and y >= 0 and y <= self.Height then
-		    dim iOvalOffset as Integer = kMouseDiameter / 2 
+		  if IsActive and _
+		    x >= 0 and x <= self.Width and y >= 0 and y <= self.Height then
+		    dim ovalOffset as Integer = kMouseDiameter / 2 
 		    
 		    g.ForeColor = &cFF000000
 		    g.FillOval _
-		    X - iOvalOffset, _
-		    Y - iOvalOffset, _
+		    X - ovalOffset, _
+		    Y - ovalOffset, _
 		    kMouseDiameter, _
 		    kMouseDiameter
 		    
 		    if System.MouseDown then
-		      g.PenWidth = kMouseDownDiameter
+		      g.PenWidth = kOvalPenWidth
 		      
-		      g.DrawOval(x - iOvalOffset - (kMouseDownDiameter * 2), _
-		      y - iOvalOffset - (kMouseDownDiameter * 2), _
-		      kMouseDiameter + kMouseDownDiameter * 4, _
-		      kMouseDiameter + kMouseDownDiameter * 4)
+		      dim diameter as integer = kMouseDiameter + kMouseDownDiameterAddition
+		      dim outerOffset as integer = diameter / 2
 		      
-		      
+		      g.DrawOval x - outerOffset, _
+		      y - outerOffset, _
+		      diameter, _
+		      diameter
 		    end if
 		  end if
 		End Sub
@@ -82,8 +102,10 @@ Inherits Window
 		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
 		    
+		    //
 		    // Cursor
-		    DrawCursor(p.Graphics)
+		    //
+		    DrawCursor p.Graphics
 		    
 		    Ghost.GhostImage = p
 		    Ghost.Invalidate
@@ -94,7 +116,15 @@ Inherits Window
 
 
 	#tag Hook, Flags = &h0
+		Event Activate()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event Close()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event Deactivate()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -114,11 +144,18 @@ Inherits Window
 		Private GhostUpdater As Timer
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private IsActive As Boolean
+	#tag EndProperty
 
-	#tag Constant, Name = kMouseDiameter, Type = Double, Dynamic = False, Default = \"10", Scope = Private
+
+	#tag Constant, Name = kMouseDiameter, Type = Double, Dynamic = False, Default = \"12", Scope = Private
 	#tag EndConstant
 
-	#tag Constant, Name = kMouseDownDiameter, Type = Double, Dynamic = False, Default = \"6", Scope = Private
+	#tag Constant, Name = kMouseDownDiameterAddition, Type = Double, Dynamic = False, Default = \"10", Scope = Private
+	#tag EndConstant
+
+	#tag Constant, Name = kOvalPenWidth, Type = Double, Dynamic = False, Default = \"3", Scope = Private
 	#tag EndConstant
 
 
