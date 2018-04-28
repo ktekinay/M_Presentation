@@ -3,7 +3,26 @@ Class MirroredWindowBase
 Inherits Window
 	#tag Event
 		Sub Activate()
+		  if IgnoreActivate then
+		    //
+		    // Already active so ignore this
+		    //
+		    return
+		  end if
+		  
+		  IgnoreActivate = true
+		  
 		  IsActive = true
+		  
+		  //
+		  // See if our ghost needs to be brought to the front
+		  //
+		  if Ghost isa object and not ( Window( 1 ) is Ghost ) then
+		    Ghost.Show
+		    self.Show
+		  end if
+		  
+		  IgnoreActivate = false
 		  
 		  RaiseEvent Activate
 		End Sub
@@ -34,6 +53,10 @@ Inherits Window
 
 	#tag Event
 		Sub Deactivate()
+		  if IgnoreActivate then
+		    return
+		  end if
+		  
 		  RaiseEvent Deactivate
 		  
 		  IsActive = false
@@ -46,7 +69,6 @@ Inherits Window
 		  
 		  GhostScaler = new ScaleWindow
 		  GhostScaler.Ghost = self.Ghost
-		  GhostScaler.Title = self.Title + " - " + GhostScaler.Title
 		  
 		  GhostUpdater = new Timer
 		  AddHandler GhostUpdater.Action, WeakAddressOf GhostUpdater_Action
@@ -98,6 +120,7 @@ Inherits Window
 		  
 		  if Ghost isa GhostWindow then
 		    Ghost.Title = self.Title
+		    GhostScaler.Title = self.Title + " - Ghost Scale"
 		    
 		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
@@ -142,6 +165,10 @@ Inherits Window
 
 	#tag Property, Flags = &h21
 		Private GhostUpdater As Timer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private IgnoreActivate As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

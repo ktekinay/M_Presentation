@@ -18,7 +18,6 @@ Folder=Mirrored Window;Mirrored Window;&h000000001D836FFF;&h0000000000000000;fal
 Class=MirroredWindowBase;Mirrored Window/MirroredWindowBase.xojo_code;&h0000000058222FFF;&h000000001D836FFF;false
 Window=GhostWindow;Mirrored Window/GhostWindow.xojo_window;&h000000000164E7FF;&h000000001D836FFF;false
 Window=ScaleWindow;Mirrored Window/ScaleWindow.xojo_window;&h000000004E4EF7FF;&h000000001D836FFF;false
-DefaultWindow=WndDemo
 AppMenuBar=MainMenuBar
 MajorVersion=1
 MinorVersion=0
