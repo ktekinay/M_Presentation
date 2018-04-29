@@ -46,7 +46,7 @@ Inherits Window
 		  //
 		  // If there are no other Ghosts, close the Scale window
 		  //
-		  dim closeIt as boolean = true
+		  dim closeIt as boolean = true // Assume we will
 		  dim lastWindowIndex as integer = WindowCount - 1
 		  for i as integer = 0 to lastWindowIndex
 		    if Window( i ) isa GhostWindow then
