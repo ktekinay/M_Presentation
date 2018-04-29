@@ -98,8 +98,8 @@ Inherits Window
 		  dim x as integer = System.MouseX - self.Left
 		  dim y as integer = System.MouseY - self.Top
 		  
-		  if IsActive and _
-		    x >= 0 and x <= self.Width and y >= 0 and y <= self.Height then
+		  if  x >= 0 and x <= self.Width and _
+		    y >= 0 and y <= self.Height then
 		    dim ovalOffset as Integer = kMouseDiameter / 2 
 		    
 		    g.ForeColor = &cFF000000
