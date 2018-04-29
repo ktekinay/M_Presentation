@@ -2,6 +2,33 @@
 Class MirroredWindowBase
 Inherits Window
 	#tag Event
+		Sub Activate()
+		  if IgnoreActivate then
+		    //
+		    // Already active so ignore this
+		    //
+		    return
+		  end if
+		  
+		  IgnoreActivate = true
+		  
+		  IsActive = true
+		  
+		  //
+		  // See if our ghost needs to be brought to the front
+		  //
+		  if Ghost isa object and not ( Window( 1 ) is Ghost ) then
+		    Ghost.Show
+		    self.Show
+		  end if
+		  
+		  IgnoreActivate = false
+		  
+		  RaiseEvent Activate
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub Close()
 		  RaiseEvent Close()
 		  
@@ -11,16 +38,39 @@ Inherits Window
 		    GhostUpdater = nil
 		  end if
 		  
-		  if GhostScaler isa ScaleWindow then
-		    GhostScaler.Close
-		    GhostScaler = nil
-		  end if
-		  
 		  if Ghost isa GhostWindow then
 		    Ghost.Close
 		    Ghost = nil
 		  end if
 		  
+		  //
+		  // If there are no other Ghosts, close the Scale window
+		  //
+		  dim closeIt as boolean = true // Assume we will
+		  dim lastWindowIndex as integer = WindowCount - 1
+		  for i as integer = 0 to lastWindowIndex
+		    if Window( i ) isa GhostWindow then
+		      closeIt = false
+		      exit
+		    end if
+		  next
+		  
+		  if closeIt then
+		    GhostScaleWindow.Close
+		  end if
+		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub Deactivate()
+		  if IgnoreActivate then
+		    return
+		  end if
+		  
+		  RaiseEvent Deactivate
+		  
+		  IsActive = false
 		End Sub
 	#tag EndEvent
 
@@ -28,19 +78,51 @@ Inherits Window
 		Sub Open()
 		  Ghost = new GhostWindow
 		  
-		  GhostScaler = new ScaleWindow
-		  GhostScaler.Ghost = self.Ghost
+		  GhostScaleWindow.Show
 		  
 		  GhostUpdater = new Timer
 		  AddHandler GhostUpdater.Action, WeakAddressOf GhostUpdater_Action
 		  GhostUpdater.Period = 1000 / 10
 		  GhostUpdater.Mode = Timer.ModeMultiple
 		  
+		  IsActive = true
 		  
 		  RaiseEvent Open()
+		  
 		End Sub
 	#tag EndEvent
 
+
+	#tag Method, Flags = &h21
+		Private Sub DrawCursor(g as Graphics)
+		  dim x as integer = System.MouseX - self.Left
+		  dim y as integer = System.MouseY - self.Top
+		  
+		  if  x >= 0 and x <= self.Width and _
+		    y >= 0 and y <= self.Height then
+		    dim ovalOffset as Integer = kMouseDiameter / 2 
+		    
+		    g.ForeColor = &cFF000000
+		    g.FillOval _
+		    X - ovalOffset, _
+		    Y - ovalOffset, _
+		    kMouseDiameter, _
+		    kMouseDiameter
+		    
+		    if System.MouseDown then
+		      g.PenWidth = kOvalPenWidth
+		      
+		      dim diameter as integer = kMouseDiameter + kMouseDownDiameterAddition
+		      dim outerOffset as integer = diameter / 2
+		      
+		      g.DrawOval x - outerOffset, _
+		      y - outerOffset, _
+		      diameter, _
+		      diameter
+		    end if
+		  end if
+		End Sub
+	#tag EndMethod
 
 	#tag Method, Flags = &h21
 		Private Sub GhostUpdater_Action(sender As Timer)
@@ -48,9 +130,15 @@ Inherits Window
 		  
 		  if Ghost isa GhostWindow then
 		    Ghost.Title = self.Title
-		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    
+		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
+		    
+		    //
+		    // Cursor
+		    //
+		    DrawCursor p.Graphics
+		    
 		    Ghost.GhostImage = p
 		    Ghost.Invalidate
 		  end if
@@ -60,7 +148,15 @@ Inherits Window
 
 
 	#tag Hook, Flags = &h0
+		Event Activate()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
 		Event Close()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event Deactivate()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -73,12 +169,26 @@ Inherits Window
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private GhostScaler As ScaleWindow
+		Private GhostUpdater As Timer
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private GhostUpdater As Timer
+		Private IgnoreActivate As Boolean
 	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private IsActive As Boolean
+	#tag EndProperty
+
+
+	#tag Constant, Name = kMouseDiameter, Type = Double, Dynamic = False, Default = \"12", Scope = Private
+	#tag EndConstant
+
+	#tag Constant, Name = kMouseDownDiameterAddition, Type = Double, Dynamic = False, Default = \"10", Scope = Private
+	#tag EndConstant
+
+	#tag Constant, Name = kOvalPenWidth, Type = Double, Dynamic = False, Default = \"3", Scope = Private
+	#tag EndConstant
 
 
 	#tag ViewBehavior

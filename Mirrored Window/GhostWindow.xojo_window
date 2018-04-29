@@ -1,5 +1,5 @@
 #tag Window
-Begin Window ScaleWindow
+Begin Window GhostWindow
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   False
@@ -9,7 +9,7 @@ Begin Window ScaleWindow
    FullScreen      =   False
    FullScreenButton=   False
    HasBackColor    =   False
-   Height          =   95
+   Height          =   400
    ImplicitInstance=   False
    LiveResize      =   True
    MacProcID       =   0
@@ -23,93 +23,34 @@ Begin Window ScaleWindow
    MinWidth        =   64
    Placement       =   0
    Resizeable      =   False
-   Title           =   "Ghost Scale"
+   Title           =   "Untitled"
    Visible         =   True
-   Width           =   404
-   Begin Slider sldScale
-      AutoDeactivate  =   True
-      Enabled         =   True
-      Height          =   23
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   20
-      LineStep        =   1
-      LiveScroll      =   True
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Maximum         =   100
-      Minimum         =   1
-      PageStep        =   20
-      Scope           =   2
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TickStyle       =   "2"
-      Top             =   20
-      Value           =   25
-      Visible         =   True
-      Width           =   364
-   End
-   Begin Label lblScale
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   2
-      Selectable      =   False
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "1x"
-      TextAlign       =   0
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   47
-      Transparent     =   True
-      Underline       =   False
-      Visible         =   True
-      Width           =   100
-   End
+   Width           =   600
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  #pragma unused areas
+		  
+		  if GhostImage isa Picture then
+		    self.Width = (GhostImage.Width / GhostImage.Graphics.ScaleX) * GhostScaleWindow.Scale
+		    self.Height = (GhostImage.Height / GhostImage.Graphics.ScaleY) * GhostScaleWindow.Scale
+		    g.DrawPicture(GhostImage, 0, 0, g.Width, g.Height, 0, 0, GhostImage.Width, GhostImage.Height)
+		  end if
+		  
+		End Sub
+	#tag EndEvent
+
+
 	#tag Property, Flags = &h0
-		Ghost As GhostWindow
+		GhostImage As Picture
 	#tag EndProperty
 
 
 #tag EndWindowCode
 
-#tag Events sldScale
-	#tag Event
-		Sub ValueChanged()
-		  dim value as Double = me.Value / 25
-		  Ghost.Scale = value
-		  
-		  lblScale.Text = str(value) + "x"
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag ViewBehavior
 	#tag ViewProperty
 		Name="BackColor"
@@ -174,6 +115,11 @@ End
 		InitialValue="False"
 		Type="Boolean"
 		EditorType="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="GhostImage"
+		Group="Behavior"
+		Type="Picture"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="HasBackColor"
@@ -334,5 +280,11 @@ End
 		Group="Size"
 		InitialValue="600"
 		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Scale"
+		Group="Behavior"
+		InitialValue="1"
+		Type="Double"
 	#tag EndViewProperty
 #tag EndViewBehavior
