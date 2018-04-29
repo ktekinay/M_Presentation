@@ -16,9 +16,9 @@ The ghost will not show pop-up menu dropdowns, focus rings, or contextual menus.
 
 ## Who Did This
 
-This project was created by Kem Tekinay (ktekinay at mactechnologies dot com). The scaler was added by Tim Parnell ().
+This project was created by Kem Tekinay (ktekinay at mactechnologies dot com). The scaler was added by Tim Parnell (timi at timi dot me).
 
-With thanks to various Xojo developers who offered advice and suggestions at the Xojo Developers' Conference.
+With thanks to various Xojo developers who offered advice and suggestions at the Xojo Developer Conference.
 
 ## Release Notes
 
