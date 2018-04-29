@@ -1,5 +1,5 @@
 Type=Desktop
-RBProjectVersion=2017.03
+RBProjectVersion=2018.011
 MinIDEVersion=20070100
 Class=App;App.xojo_code;&h000000000BA837FF;&h0000000000000000;false
 MenuBar=MainMenuBar;MainMenuBar.xojo_menu;&h0000000034FA4FFF;&h0000000000000000;false
@@ -18,7 +18,6 @@ Folder=Mirrored Window;Mirrored Window;&h000000001D836FFF;&h0000000000000000;fal
 Class=MirroredWindowBase;Mirrored Window/MirroredWindowBase.xojo_code;&h0000000058222FFF;&h000000001D836FFF;false
 Window=GhostWindow;Mirrored Window/GhostWindow.xojo_window;&h000000000164E7FF;&h000000001D836FFF;false
 Window=ScaleWindow;Mirrored Window/ScaleWindow.xojo_window;&h000000004E4EF7FF;&h000000001D836FFF;false
-DefaultWindow=WndDemo
 AppMenuBar=MainMenuBar
 MajorVersion=1
 MinorVersion=0
