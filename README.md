@@ -22,11 +22,13 @@ With thanks to various Xojo developers who offered advice and suggestions at the
 
 ## Release Notes
 
-1.1 (April 27, 2018)
+1.1 (April 29, 2018)
 
-- Scale Window will include the name of the master window it is linked to.
 - The cursor will show up on the ghost window as a red dot, or bullseye when clicked.
+- Ghost windows will reflect the order of their main windows by default.
 - Moved `MirroredWindowBase` out of the M\_Presentation module.
+- Renamed `ScaleWindow` to `GhostScaleWindow`.
+- One `GhostScaleWindow` to rule them all! Because why would you need the Ghosts to be of different scales?
 
 1.0 (April 26, 2018)
 
