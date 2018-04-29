@@ -35,8 +35,8 @@ End
 		  #pragma unused areas
 		  
 		  if GhostImage isa Picture then
-		    self.Width = (GhostImage.Width / GhostImage.Graphics.ScaleX) * Scale
-		    self.Height = (GhostImage.Height / GhostImage.Graphics.ScaleY) * Scale
+		    self.Width = (GhostImage.Width / GhostImage.Graphics.ScaleX) * GhostScaleWindow.Scale
+		    self.Height = (GhostImage.Height / GhostImage.Graphics.ScaleY) * GhostScaleWindow.Scale
 		    g.DrawPicture(GhostImage, 0, 0, g.Width, g.Height, 0, 0, GhostImage.Width, GhostImage.Height)
 		  end if
 		  
@@ -46,10 +46,6 @@ End
 
 	#tag Property, Flags = &h0
 		GhostImage As Picture
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Scale As Double = 1
 	#tag EndProperty
 
 

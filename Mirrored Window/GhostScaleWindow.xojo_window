@@ -1,5 +1,5 @@
 #tag Window
-Begin Window ScaleWindow
+Begin Window GhostScaleWindow
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   False
@@ -10,7 +10,7 @@ Begin Window ScaleWindow
    FullScreenButton=   False
    HasBackColor    =   False
    Height          =   95
-   ImplicitInstance=   False
+   ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
    MaxHeight       =   32000
@@ -95,7 +95,7 @@ End
 
 #tag WindowCode
 	#tag Property, Flags = &h0
-		Ghost As GhostWindow
+		Scale As Double = 1.0
 	#tag EndProperty
 
 
@@ -105,7 +105,7 @@ End
 	#tag Event
 		Sub ValueChanged()
 		  dim value as Double = me.Value / 25.0
-		  Ghost.Scale = value
+		  Scale = value
 		  
 		  lblScale.Text = str( value ) + "x"
 		End Sub

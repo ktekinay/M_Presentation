@@ -38,11 +38,6 @@ Inherits Window
 		    GhostUpdater = nil
 		  end if
 		  
-		  if GhostScaler isa ScaleWindow then
-		    GhostScaler.Close
-		    GhostScaler = nil
-		  end if
-		  
 		  if Ghost isa GhostWindow then
 		    Ghost.Close
 		    Ghost = nil
@@ -67,8 +62,7 @@ Inherits Window
 		Sub Open()
 		  Ghost = new GhostWindow
 		  
-		  GhostScaler = new ScaleWindow
-		  GhostScaler.Ghost = self.Ghost
+		  GhostScaleWindow.Show
 		  
 		  GhostUpdater = new Timer
 		  AddHandler GhostUpdater.Action, WeakAddressOf GhostUpdater_Action
@@ -120,7 +114,6 @@ Inherits Window
 		  
 		  if Ghost isa GhostWindow then
 		    Ghost.Title = self.Title
-		    GhostScaler.Title = self.Title + " - Ghost Scale"
 		    
 		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
@@ -157,10 +150,6 @@ Inherits Window
 
 	#tag Property, Flags = &h21
 		Private Ghost As GhostWindow
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private GhostScaler As ScaleWindow
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
