@@ -89,6 +89,46 @@ Inherits Window
 		  
 		  RaiseEvent Open()
 		  
+		  
+		  if AutoMoveGhostOnOpen then
+		    //
+		    // Move the ghost window to somewhere more logical
+		    //
+		    dim newLeft as integer
+		    dim newTop as integer
+		    
+		    if ScreenCount > 1 then
+		      newLeft = Screen( 1 ).Left + self.Left
+		      newTop = Screen( 1 ).Top + self.Top
+		    else
+		      newLeft = self.Left + self.Width + 20
+		    end if
+		    
+		    //
+		    // Make sure it's still visible
+		    //
+		    if newLeft < ( Screen( 0 ).Width - 10 ) and newTop < ( Screen( 0 ).Height - 10 ) then
+		      Ghost.Left = newLeft
+		      Ghost.Top = newTop
+		    end if
+		    
+		    //
+		    // Move the controls
+		    //
+		    newTop = GhostScaleWindow.Top
+		    newLeft = self.Left + self.Width + 20
+		    
+		    if newLeft >= ( Screen( 0 ).Width - 10 ) then
+		      newLeft = GhostScaleWindow.Left
+		      newTop = self.Top + self.Height + 20
+		    end if
+		    
+		    if newTop <= ( Screen( 0 ).Height - 10 ) then
+		      GhostScaleWindow.Left = newLeft
+		      GhostScaleWindow.Top = newTop
+		    end if
+		  end if
+		  
 		End Sub
 	#tag EndEvent
 
@@ -164,6 +204,10 @@ Inherits Window
 	#tag EndHook
 
 
+	#tag Property, Flags = &h0
+		AutoMoveGhostOnOpen As Boolean = True
+	#tag EndProperty
+
 	#tag Property, Flags = &h21
 		Private Ghost As GhostWindow
 	#tag EndProperty
@@ -193,18 +237,67 @@ Inherits Window
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="BackColor"
+			Name="Interfaces"
 			Visible=true
-			Group="Background"
-			InitialValue="&hFFFFFF"
-			Type="Color"
+			Group="ID"
+			Type="String"
+			EditorType="String"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Backdrop"
+			Name="Name"
 			Visible=true
-			Group="Background"
-			Type="Picture"
-			EditorType="Picture"
+			Group="ID"
+			Type="String"
+			EditorType="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Super"
+			Visible=true
+			Group="ID"
+			Type="String"
+			EditorType="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Height"
+			Visible=true
+			Group="Size"
+			InitialValue="400"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MaxHeight"
+			Visible=true
+			Group="Size"
+			InitialValue="32000"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MaxWidth"
+			Visible=true
+			Group="Size"
+			InitialValue="32000"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MinHeight"
+			Visible=true
+			Group="Size"
+			InitialValue="64"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MinWidth"
+			Visible=true
+			Group="Size"
+			InitialValue="64"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Width"
+			Visible=true
+			Group="Size"
+			InitialValue="600"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="CloseButton"
@@ -213,12 +306,6 @@ Inherits Window
 			InitialValue="True"
 			Type="Boolean"
 			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Composite"
-			Group="OS X (Carbon)"
-			InitialValue="False"
-			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Frame"
@@ -242,68 +329,12 @@ Inherits Window
 			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="FullScreen"
-			Group="Behavior"
-			InitialValue="False"
-			Type="Boolean"
-			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="FullScreenButton"
 			Visible=true
 			Group="Frame"
 			InitialValue="False"
 			Type="Boolean"
 			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="HasBackColor"
-			Visible=true
-			Group="Background"
-			InitialValue="False"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Height"
-			Visible=true
-			Group="Size"
-			InitialValue="400"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ImplicitInstance"
-			Visible=true
-			Group="Behavior"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Interfaces"
-			Visible=true
-			Group="ID"
-			Type="String"
-			EditorType="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="LiveResize"
-			Group="Behavior"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MacProcID"
-			Group="OS X (Carbon)"
-			InitialValue="0"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MaxHeight"
-			Visible=true
-			Group="Size"
-			InitialValue="32000"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="MaximizeButton"
@@ -314,35 +345,6 @@ Inherits Window
 			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="MaxWidth"
-			Visible=true
-			Group="Size"
-			InitialValue="32000"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MenuBar"
-			Visible=true
-			Group="Menus"
-			Type="MenuBar"
-			EditorType="MenuBar"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MenuBarVisible"
-			Visible=true
-			Group="Deprecated"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MinHeight"
-			Visible=true
-			Group="Size"
-			InitialValue="64"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="MinimizeButton"
 			Visible=true
 			Group="Frame"
@@ -351,18 +353,48 @@ Inherits Window
 			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="MinWidth"
+			Name="Resizeable"
 			Visible=true
-			Group="Size"
-			InitialValue="64"
-			Type="Integer"
+			Group="Frame"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Name"
+			Name="Title"
 			Visible=true
-			Group="ID"
+			Group="Frame"
+			InitialValue="Untitled"
 			Type="String"
-			EditorType="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BackColor"
+			Visible=true
+			Group="Background"
+			InitialValue="&hFFFFFF"
+			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Backdrop"
+			Visible=true
+			Group="Background"
+			Type="Picture"
+			EditorType="Picture"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HasBackColor"
+			Visible=true
+			Group="Background"
+			InitialValue="False"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ImplicitInstance"
+			Visible=true
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Placement"
@@ -380,28 +412,6 @@ Inherits Window
 			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Resizeable"
-			Visible=true
-			Group="Frame"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Super"
-			Visible=true
-			Group="ID"
-			Type="String"
-			EditorType="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Title"
-			Visible=true
-			Group="Frame"
-			InitialValue="Untitled"
-			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Visible"
 			Visible=true
 			Group="Behavior"
@@ -410,10 +420,51 @@ Inherits Window
 			EditorType="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Width"
+			Name="AutoMoveGhostOnOpen"
 			Visible=true
-			Group="Size"
-			InitialValue="600"
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MenuBar"
+			Visible=true
+			Group="Menus"
+			Type="MenuBar"
+			EditorType="MenuBar"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MenuBarVisible"
+			Visible=true
+			Group="Deprecated"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Composite"
+			Group="OS X (Carbon)"
+			InitialValue="False"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="FullScreen"
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="LiveResize"
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="MacProcID"
+			Group="OS X (Carbon)"
+			InitialValue="0"
 			Type="Integer"
 		#tag EndViewProperty
 	#tag EndViewBehavior

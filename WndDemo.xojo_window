@@ -339,22 +339,82 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  //
+		  // Allow the ghost window to automatically move
+		  // away from its master (default True)
+		  //
+		  AutoMoveGhostOnOpen = true
+		End Sub
+	#tag EndEvent
+
+
 #tag EndWindowCode
 
 #tag ViewBehavior
 	#tag ViewProperty
-		Name="BackColor"
+		Name="Interfaces"
 		Visible=true
-		Group="Background"
-		InitialValue="&hFFFFFF"
-		Type="Color"
+		Group="ID"
+		Type="String"
+		EditorType="String"
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Backdrop"
+		Name="Name"
 		Visible=true
-		Group="Background"
-		Type="Picture"
-		EditorType="Picture"
+		Group="ID"
+		Type="String"
+		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Super"
+		Visible=true
+		Group="ID"
+		Type="String"
+		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Size"
+		InitialValue="400"
+		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaxHeight"
+		Visible=true
+		Group="Size"
+		InitialValue="32000"
+		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MaxWidth"
+		Visible=true
+		Group="Size"
+		InitialValue="32000"
+		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinHeight"
+		Visible=true
+		Group="Size"
+		InitialValue="64"
+		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MinWidth"
+		Visible=true
+		Group="Size"
+		InitialValue="64"
+		Type="Integer"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Width"
+		Visible=true
+		Group="Size"
+		InitialValue="600"
+		Type="Integer"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="CloseButton"
@@ -363,12 +423,6 @@ End
 		InitialValue="True"
 		Type="Boolean"
 		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Composite"
-		Group="OS X (Carbon)"
-		InitialValue="False"
-		Type="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Frame"
@@ -392,68 +446,12 @@ End
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="FullScreen"
-		Group="Behavior"
-		InitialValue="False"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
 		Name="FullScreenButton"
 		Visible=true
 		Group="Frame"
 		InitialValue="False"
 		Type="Boolean"
 		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="HasBackColor"
-		Visible=true
-		Group="Background"
-		InitialValue="False"
-		Type="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Height"
-		Visible=true
-		Group="Size"
-		InitialValue="400"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="ImplicitInstance"
-		Visible=true
-		Group="Behavior"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Interfaces"
-		Visible=true
-		Group="ID"
-		Type="String"
-		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="LiveResize"
-		Group="Behavior"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MacProcID"
-		Group="OS X (Carbon)"
-		InitialValue="0"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MaxHeight"
-		Visible=true
-		Group="Size"
-		InitialValue="32000"
-		Type="Integer"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="MaximizeButton"
@@ -464,35 +462,6 @@ End
 		EditorType="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="MaxWidth"
-		Visible=true
-		Group="Size"
-		InitialValue="32000"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MenuBar"
-		Visible=true
-		Group="Menus"
-		Type="MenuBar"
-		EditorType="MenuBar"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MenuBarVisible"
-		Visible=true
-		Group="Deprecated"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MinHeight"
-		Visible=true
-		Group="Size"
-		InitialValue="64"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
 		Name="MinimizeButton"
 		Visible=true
 		Group="Frame"
@@ -501,18 +470,55 @@ End
 		EditorType="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="MinWidth"
+		Name="Resizeable"
 		Visible=true
-		Group="Size"
-		InitialValue="64"
-		Type="Integer"
+		Group="Frame"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Name"
+		Name="Title"
 		Visible=true
-		Group="ID"
+		Group="Frame"
+		InitialValue="Untitled"
 		Type="String"
-		EditorType="String"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="BackColor"
+		Visible=true
+		Group="Background"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Background"
+		Type="Picture"
+		EditorType="Picture"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasBackColor"
+		Visible=true
+		Group="Background"
+		InitialValue="False"
+		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AutoMoveOnOpen"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="ImplicitInstance"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Placement"
@@ -530,28 +536,6 @@ End
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Resizeable"
-		Visible=true
-		Group="Frame"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Super"
-		Visible=true
-		Group="ID"
-		Type="String"
-		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Title"
-		Visible=true
-		Group="Frame"
-		InitialValue="Untitled"
-		Type="String"
-	#tag EndViewProperty
-	#tag ViewProperty
 		Name="Visible"
 		Visible=true
 		Group="Behavior"
@@ -560,10 +544,44 @@ End
 		EditorType="Boolean"
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Width"
+		Name="MenuBar"
 		Visible=true
-		Group="Size"
-		InitialValue="600"
+		Group="Menus"
+		Type="MenuBar"
+		EditorType="MenuBar"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MenuBarVisible"
+		Visible=true
+		Group="Deprecated"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Composite"
+		Group="OS X (Carbon)"
+		InitialValue="False"
+		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="FullScreen"
+		Group="Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LiveResize"
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MacProcID"
+		Group="OS X (Carbon)"
+		InitialValue="0"
 		Type="Integer"
 	#tag EndViewProperty
 #tag EndViewBehavior
