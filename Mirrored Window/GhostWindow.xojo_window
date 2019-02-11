@@ -34,13 +34,8 @@ End
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  #pragma unused areas
 		  
-		  dim thisµs as double = Microseconds
-		  LastPaintedµs = thisµs
-		  
 		  if GhostImage isa Picture then
-		    static PaintId as integer
-		    PaintId = PaintId + 1
-		    dim thisId as integer = PaintId
+		    System.DebugLog "Updating ghost of " + self.Title
 		    
 		    dim newWidth as integer = ( GhostImage.Width / GhostImage.Graphics.ScaleX ) * GhostScaleWindow.Scale
 		    dim newHeight as integer = ( GhostImage.Height / GhostImage.Graphics.ScaleY ) * GhostScaleWindow.Scale
@@ -53,9 +48,8 @@ End
 		      self.Height = newHeight
 		    end if
 		    
-		    System.DebugLog format( LastPaintedµs, "#,0" ) + " Id " + str( thisId ) +  " Start painting"
+		    g.ClearRect 0, 0, g.Width, g.Height
 		    g.DrawPicture( GhostImage, 0, 0, g.Width, g.Height, 0, 0, GhostImage.Width, GhostImage.Height )
-		    System.DebugLog format( LastPaintedµs, "#,0" ) + " Id " + str( thisId ) +  " End painting"
 		  end if
 		  
 		End Sub
@@ -68,10 +62,6 @@ End
 
 	#tag Property, Flags = &h21
 		Private LastHeight As Integer = -1
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private LastPaintedµs As Double
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
