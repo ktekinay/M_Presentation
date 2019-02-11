@@ -39,12 +39,12 @@ End
 		    
 		    dim newWidth as integer = ( GhostImage.Width / GhostImage.Graphics.ScaleX ) * GhostScaleWindow.Scale
 		    dim newHeight as integer = ( GhostImage.Height / GhostImage.Graphics.ScaleY ) * GhostScaleWindow.Scale
-		    if newWidth <> lastWidth then
-		      lastWidth = newWidth
+		    if newWidth <> LastWidth then
+		      LastWidth = newWidth
 		      self.Width = newWidth
 		    end if
-		    if newHeight <> lastHeight then
-		      lastHeight = newHeight
+		    if newHeight <> LastHeight then
+		      LastHeight = newHeight
 		      self.Height = newHeight
 		    end if
 		    
