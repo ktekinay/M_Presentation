@@ -34,10 +34,28 @@ End
 		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
 		  #pragma unused areas
 		  
+		  dim thisµs as double = Microseconds
+		  LastPaintedµs = thisµs
+		  
 		  if GhostImage isa Picture then
-		    self.Width = (GhostImage.Width / GhostImage.Graphics.ScaleX) * GhostScaleWindow.Scale
-		    self.Height = (GhostImage.Height / GhostImage.Graphics.ScaleY) * GhostScaleWindow.Scale
-		    g.DrawPicture(GhostImage, 0, 0, g.Width, g.Height, 0, 0, GhostImage.Width, GhostImage.Height)
+		    static PaintId as integer
+		    PaintId = PaintId + 1
+		    dim thisId as integer = PaintId
+		    
+		    dim newWidth as integer = ( GhostImage.Width / GhostImage.Graphics.ScaleX ) * GhostScaleWindow.Scale
+		    dim newHeight as integer = ( GhostImage.Height / GhostImage.Graphics.ScaleY ) * GhostScaleWindow.Scale
+		    if newWidth <> lastWidth then
+		      lastWidth = newWidth
+		      self.Width = newWidth
+		    end if
+		    if newHeight <> lastHeight then
+		      lastHeight = newHeight
+		      self.Height = newHeight
+		    end if
+		    
+		    System.DebugLog format( LastPaintedµs, "#,0" ) + " Id " + str( thisId ) +  " Start painting"
+		    g.DrawPicture( GhostImage, 0, 0, g.Width, g.Height, 0, 0, GhostImage.Width, GhostImage.Height )
+		    System.DebugLog format( LastPaintedµs, "#,0" ) + " Id " + str( thisId ) +  " End painting"
 		  end if
 		  
 		End Sub
@@ -46,6 +64,18 @@ End
 
 	#tag Property, Flags = &h0
 		GhostImage As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastHeight As Integer = -1
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastPaintedµs As Double
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastWidth As Integer = -1
 	#tag EndProperty
 
 
@@ -280,11 +310,5 @@ End
 		Group="Size"
 		InitialValue="600"
 		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Scale"
-		Group="Behavior"
-		InitialValue="1"
-		Type="Double"
 	#tag EndViewProperty
 #tag EndViewBehavior
