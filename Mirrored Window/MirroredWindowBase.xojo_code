@@ -183,6 +183,11 @@ Inherits Window
 		    //
 		    DrawCursor p.Graphics
 		    
+		    //
+		    // Check to see if Ghost.Invalidate is necessary.
+		    // We do this here because, once we call Invalidate,
+		    // the Ghost must draw *something* or it will go blank.
+		    //
 		    dim currentScale as double = GhostScaleWindow.Scale
 		    
 		    if currentScale <> LastScale or not IsSamePicture( p, LastImage ) then
