@@ -183,7 +183,10 @@ Inherits Window
 		    //
 		    DrawCursor p.Graphics
 		    
-		    if not IsSamePicture( p, LastImage ) then
+		    dim currentScale as double = GhostScaleWindow.Scale
+		    
+		    if currentScale <> LastScale or not IsSamePicture( p, LastImage ) then
+		      LastScale = currentScale
 		      LastImage = p
 		      Ghost.GhostImage = p
 		      Ghost.Invalidate
@@ -195,6 +198,10 @@ Inherits Window
 
 	#tag Method, Flags = &h21
 		Private Function IsSamePicture(p1 As Picture, p2 As Picture) As Boolean
+		  if p1 = p2 then
+		    return true
+		  end if
+		  
 		  if p1 is nil and p2 is nil then
 		    return true
 		  end if
@@ -207,25 +214,20 @@ Inherits Window
 		    return false
 		  end if
 		  
-		  dim lastH as integer = p1.Height - 1
-		  dim lastW as integer = p1.Width - 1
-		  
-		  dim rgb1 as RGBSurface = p1.RGBSurface
-		  dim rgb2 as RGBSurface = p2.RGBSurface
+		  if p1.Graphics.ScaleX <> p2.Graphics.ScaleX or p1.Graphics.ScaleY <> p2.Graphics.ScaleY then
+		    return false
+		  end if
 		  
 		  dim startµs as double = Microseconds
 		  
-		  for y as integer = 0 to lastH
-		    for x as integer = 0 to lastW
-		      if rgb1.Pixel( x, y ) <> rgb2.Pixel( x, y ) then
-		        return false
-		      end if
-		    next
-		  next
+		  dim data1 as string = p1.GetData( Picture.FormatTIFF )
+		  dim data2 as string = p2.GetData( Picture.FormatTIFF )
+		  dim isSame as boolean = StrComp( data1, data2, 0 ) = 0
 		  
 		  dim diff as double = Microseconds - startµs
 		  System.DebugLog "Picture scanning took " + format( diff, "#,0" ) + " µs"
-		  return true
+		  
+		  return isSame
 		  
 		End Function
 	#tag EndMethod
@@ -270,6 +272,10 @@ Inherits Window
 
 	#tag Property, Flags = &h21
 		Private LastImage As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastScale As Double = -1.0
 	#tag EndProperty
 
 
