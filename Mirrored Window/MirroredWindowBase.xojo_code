@@ -171,7 +171,9 @@ Inherits Window
 		  #pragma unused sender
 		  
 		  if Ghost isa GhostWindow then
-		    Ghost.Title = self.Title
+		    if Ghost.Title <> self.Title then
+		      Ghost.Title = self.Title
+		    end if
 		    
 		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
@@ -181,11 +183,51 @@ Inherits Window
 		    //
 		    DrawCursor p.Graphics
 		    
-		    Ghost.GhostImage = p
-		    Ghost.Invalidate
+		    if not IsSamePicture( p, LastImage ) then
+		      LastImage = p
+		      Ghost.GhostImage = p
+		      Ghost.Invalidate
+		    end if
 		  end if
 		  
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Function IsSamePicture(p1 As Picture, p2 As Picture) As Boolean
+		  if p1 is nil and p2 is nil then
+		    return true
+		  end if
+		  
+		  if p1 is nil or p2 is nil then
+		    return false
+		  end if
+		  
+		  if p1.Width <> p2.Width or p1.Height <> p2.Height then
+		    return false
+		  end if
+		  
+		  dim lastH as integer = p1.Height - 1
+		  dim lastW as integer = p1.Width - 1
+		  
+		  dim rgb1 as RGBSurface = p1.RGBSurface
+		  dim rgb2 as RGBSurface = p2.RGBSurface
+		  
+		  dim startµs as double = Microseconds
+		  
+		  for y as integer = 0 to lastH
+		    for x as integer = 0 to lastW
+		      if rgb1.Pixel( x, y ) <> rgb2.Pixel( x, y ) then
+		        return false
+		      end if
+		    next
+		  next
+		  
+		  dim diff as double = Microseconds - startµs
+		  System.DebugLog "Picture scanning took " + format( diff, "#,0" ) + " µs"
+		  return true
+		  
+		End Function
 	#tag EndMethod
 
 
@@ -224,6 +266,10 @@ Inherits Window
 
 	#tag Property, Flags = &h21
 		Private IsActive As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastImage As Picture
 	#tag EndProperty
 
 
