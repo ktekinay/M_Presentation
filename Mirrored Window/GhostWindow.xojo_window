@@ -48,6 +48,10 @@ End
 		      self.Height = newHeight
 		    end if
 		    
+		    //
+		    // If we don't ClearRect first, we sometimes
+		    // get a black background and it makes us sad.
+		    //
 		    g.ClearRect 0, 0, g.Width, g.Height
 		    g.DrawPicture( GhostImage, 0, 0, g.Width, g.Height, 0, 0, GhostImage.Width, GhostImage.Height )
 		  end if
