@@ -111,12 +111,14 @@ Inherits Window
 		      Ghost.Left = newLeft
 		      Ghost.Top = newTop
 		    end if
-		    
-		    //
-		    // Move the controls
-		    //
-		    newTop = GhostScaleWindow.Top
-		    newLeft = self.Left + self.Width + 20
+		  end if
+		  
+		  //
+		  // Move the controls
+		  //
+		  if true then
+		    dim newTop as integer = GhostScaleWindow.Top
+		    dim newLeft as integer = self.Left + self.Width + 20
 		    
 		    if newLeft >= ( Screen( 0 ).Width - 10 ) then
 		      newLeft = GhostScaleWindow.Left
