@@ -1,17 +1,17 @@
 #tag Class
-Class PresentationTextField
-Inherits TextField
+Class PresentationDesktopTextArea
+Inherits DesktopTextArea
 	#tag Event
-		Sub Open()
-		  self.TextSize = M_Presentation.FontSize
-		  RaiseEvent Open()
+		Sub Opening()
+		  self.FontSize = M_Presentation.FontSize
+		  RaiseEvent Opening()
 		  
 		End Sub
 	#tag EndEvent
 
 
 	#tag Hook, Flags = &h0
-		Event Open()
+		Event Opening()
 	#tag EndHook
 
 
@@ -47,6 +47,30 @@ Inherits TextField
 			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HasHorizontalScrollbar"
+			Visible=true
+			Group="Appearance"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HasVerticalScrollbar"
+			Visible=true
+			Group="Appearance"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="AllowStyledText"
+			Visible=true
+			Group="Appearance"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AllowFocusRing"
@@ -88,14 +112,6 @@ Inherits TextField
 			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Hint"
-			Visible=true
-			Group="Initial State"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="AllowTabs"
 			Visible=true
 			Group="Behavior"
@@ -121,7 +137,7 @@ Inherits TextField
 			Name="AllowSpellChecking"
 			Visible=true
 			Group="Behavior"
-			InitialValue="False"
+			InitialValue="True"
 			Type="boolean"
 			EditorType=""
 		#tag EndViewProperty
@@ -142,11 +158,56 @@ Inherits TextField
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="UnicodeMode"
+			Visible=true
+			Group="Selection Behavior"
+			InitialValue="0"
+			Type="TextArea.UnicodeModes"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - Native"
+				"1 - Characters"
+				"2 - Codepoints"
+			#tag EndEnumValues
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Transparent"
 			Visible=true
 			Group="Appearance"
 			InitialValue="False"
 			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Multiline"
+			Visible=true
+			Group="Appearance"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HideSelection"
+			Visible=true
+			Group="Appearance"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="LineHeight"
+			Visible=true
+			Group="Appearance"
+			InitialValue="0"
+			Type="Double"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="LineSpacing"
+			Visible=true
+			Group="Appearance"
+			InitialValue="1"
+			Type="Double"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -258,14 +319,6 @@ Inherits TextField
 			Visible=true
 			Group="Position"
 			InitialValue="True"
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Password"
-			Visible=true
-			Group="Appearance"
-			InitialValue=""
 			Type="Boolean"
 			EditorType=""
 		#tag EndViewProperty

@@ -1,39 +1,23 @@
 #tag Class
-Class PresentationTextField
-Inherits TextField
+Class PresentationDesktopPopupMenu
+Inherits DesktopPopupMenu
 	#tag Event
-		Sub Open()
-		  self.TextSize = M_Presentation.FontSize
-		  RaiseEvent Open()
+		Sub Opening()
+		  self.FontSize = M_Presentation.FontSize
+		  RaiseEvent Opening()
 		  
 		End Sub
 	#tag EndEvent
 
 
 	#tag Hook, Flags = &h0
-		Event Open()
+		Event Opening()
 	#tag EndHook
 
 
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="AllowAutoDeactivate"
-			Visible=true
-			Group="Appearance"
-			InitialValue="True"
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BackgroundColor"
-			Visible=true
-			Group="Appearance"
-			InitialValue="&hFFFFFF"
-			Type="Color"
-			EditorType="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="HasBorder"
 			Visible=true
 			Group="Appearance"
 			InitialValue="True"
@@ -49,11 +33,11 @@ Inherits TextField
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="AllowFocusRing"
+			Name="SelectedRowIndex"
 			Visible=true
 			Group="Appearance"
-			InitialValue="True"
-			Type="Boolean"
+			InitialValue="0"
+			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -88,66 +72,20 @@ Inherits TextField
 			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Hint"
-			Visible=true
-			Group="Initial State"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AllowTabs"
-			Visible=true
-			Group="Behavior"
-			InitialValue="False"
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="TextAlignment"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="TextAlignments"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - Default"
-				"1 - Left"
-				"2 - Center"
-				"3 - Right"
-			#tag EndEnumValues
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AllowSpellChecking"
-			Visible=true
-			Group="Behavior"
-			InitialValue="False"
-			Type="boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="MaximumCharactersAllowed"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="Integer"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ValidationMask"
-			Visible=true
-			Group="Behavior"
-			InitialValue=""
-			Type="String"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Transparent"
 			Visible=true
 			Group="Appearance"
 			InitialValue="False"
 			Type="Boolean"
 			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="InitialValue"
+			Visible=true
+			Group="Appearance"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
@@ -262,35 +200,11 @@ Inherits TextField
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Password"
-			Visible=true
-			Group="Appearance"
-			InitialValue=""
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="TextColor"
-			Visible=true
-			Group="Appearance"
-			InitialValue="&h000000"
-			Type="Color"
-			EditorType="Color"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Enabled"
 			Visible=true
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Format"
-			Visible=true
-			Group="Appearance"
-			InitialValue=""
-			Type="String"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -324,38 +238,6 @@ Inherits TextField
 			InitialValue=""
 			Type="Boolean"
 			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Text"
-			Visible=true
-			Group="Initial State"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ReadOnly"
-			Visible=true
-			Group="Behavior"
-			InitialValue=""
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataSource"
-			Visible=true
-			Group="Database Binding"
-			InitialValue=""
-			Type="String"
-			EditorType="DataSource"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataField"
-			Visible=true
-			Group="Database Binding"
-			InitialValue=""
-			Type="String"
-			EditorType="DataField"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

@@ -3,7 +3,6 @@ Begin MirroredWindowBase WndDemo
    BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   True
-   Compatibility   =   ""
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
@@ -11,7 +10,7 @@ Begin MirroredWindowBase WndDemo
    HasBackColor    =   False
    Height          =   400
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   True
@@ -26,7 +25,7 @@ Begin MirroredWindowBase WndDemo
    Title           =   "My Demo"
    Visible         =   True
    Width           =   600
-   Begin M_Presentation.PresentationTabPanel PresentationTabPanel1
+   Begin M_Presentation.PresentationTabPanel PresentationDesktopTabPanel
       AutoDeactivate  =   True
       Bold            =   False
       Enabled         =   True
@@ -57,7 +56,7 @@ Begin MirroredWindowBase WndDemo
       Value           =   1
       Visible         =   True
       Width           =   560
-      Begin M_Presentation.PresentationCheckbox PresentationCheckbox1
+      Begin M_Presentation.PresentationCheckbox PresentationDesktopCheckbox
          AutoDeactivate  =   True
          Bold            =   False
          Caption         =   "Untitled"
@@ -67,7 +66,7 @@ Begin MirroredWindowBase WndDemo
          Height          =   20
          HelpTag         =   ""
          Index           =   -2147483648
-         InitialParent   =   "PresentationTabPanel1"
+         InitialParent   =   "PresentationDesktopTabPanel"
          Italic          =   False
          Left            =   77
          LockBottom      =   False
@@ -90,7 +89,7 @@ Begin MirroredWindowBase WndDemo
          Visible         =   True
          Width           =   210
       End
-      Begin M_Presentation.PresentationLabel PresentationLabel1
+      Begin M_Presentation.PresentationLabel PresentationDesktopLabel
          AutoDeactivate  =   True
          Bold            =   False
          DataField       =   ""
@@ -99,7 +98,7 @@ Begin MirroredWindowBase WndDemo
          Height          =   20
          HelpTag         =   ""
          Index           =   -2147483648
-         InitialParent   =   "PresentationTabPanel1"
+         InitialParent   =   "PresentationDesktopTabPanel"
          Italic          =   False
          Left            =   77
          LockBottom      =   False
@@ -125,7 +124,7 @@ Begin MirroredWindowBase WndDemo
          Visible         =   True
          Width           =   187
       End
-      Begin M_Presentation.PresentationListbox PresentationListbox1
+      Begin M_Presentation.PresentationListbox PresentationDesktopListbox
          AutoDeactivate  =   True
          AutoHideScrollbars=   True
          Bold            =   False
@@ -147,7 +146,7 @@ Begin MirroredWindowBase WndDemo
          HelpTag         =   ""
          Hierarchical    =   False
          Index           =   -2147483648
-         InitialParent   =   "PresentationTabPanel1"
+         InitialParent   =   "PresentationDesktopTabPanel"
          InitialValue    =   "This	Is	A	Test\nIt's	Only	A	Test\nNothing	More	Than	Test"
          Italic          =   False
          Left            =   40
@@ -177,7 +176,7 @@ Begin MirroredWindowBase WndDemo
          _ScrollOffset   =   0
          _ScrollWidth    =   -1
       End
-      Begin M_Presentation.PresentationPopupMenu PresentationPopupMenu1
+      Begin M_Presentation.PresentationPopupMenu PresentationDesktopPopupMenu
          AutoDeactivate  =   True
          Bold            =   False
          DataField       =   ""
@@ -186,7 +185,7 @@ Begin MirroredWindowBase WndDemo
          Height          =   22
          HelpTag         =   ""
          Index           =   -2147483648
-         InitialParent   =   "PresentationTabPanel1"
+         InitialParent   =   "PresentationDesktopTabPanel"
          InitialValue    =   "Choice 1\nChoice 2\nChoice 3"
          Italic          =   False
          Left            =   77
@@ -209,10 +208,10 @@ Begin MirroredWindowBase WndDemo
          Visible         =   True
          Width           =   187
       End
-      Begin M_Presentation.PresentationPushButton PresentationPushButton1
+      Begin M_Presentation.PresentationPushButton PresentationDesktopPushButton
          AutoDeactivate  =   True
          Bold            =   False
-         ButtonStyle     =   "0"
+         ButtonStyle     =   0
          Cancel          =   False
          Caption         =   "Untitled"
          Default         =   False
@@ -220,7 +219,7 @@ Begin MirroredWindowBase WndDemo
          Height          =   20
          HelpTag         =   ""
          Index           =   -2147483648
-         InitialParent   =   "PresentationTabPanel1"
+         InitialParent   =   "PresentationDesktopTabPanel"
          Italic          =   False
          Left            =   362
          LockBottom      =   False
@@ -241,7 +240,7 @@ Begin MirroredWindowBase WndDemo
          Visible         =   True
          Width           =   131
       End
-      Begin M_Presentation.PresentationTextArea PresentationTextArea1
+      Begin M_Presentation.PresentationTextArea PresentationDesktopTextArea
          AcceptTabs      =   False
          Alignment       =   0
          AutoDeactivate  =   True
@@ -257,7 +256,7 @@ Begin MirroredWindowBase WndDemo
          HelpTag         =   ""
          HideSelection   =   True
          Index           =   -2147483648
-         InitialParent   =   "PresentationTabPanel1"
+         InitialParent   =   "PresentationDesktopTabPanel"
          Italic          =   False
          Left            =   96
          LimitText       =   0
@@ -286,11 +285,12 @@ Begin MirroredWindowBase WndDemo
          Top             =   223
          Transparent     =   False
          Underline       =   False
+         UnicodeMode     =   0
          UseFocusRing    =   True
          Visible         =   True
          Width           =   214
       End
-      Begin M_Presentation.PresentationTextField PresentationTextField1
+      Begin M_Presentation.PresentationTextField PresentationDesktopTextField
          AcceptTabs      =   False
          Alignment       =   0
          AutoDeactivate  =   True
@@ -306,7 +306,7 @@ Begin MirroredWindowBase WndDemo
          Height          =   22
          HelpTag         =   ""
          Index           =   -2147483648
-         InitialParent   =   "PresentationTabPanel1"
+         InitialParent   =   "PresentationDesktopTabPanel"
          Italic          =   False
          Left            =   379
          LimitText       =   0
@@ -339,97 +339,47 @@ End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Event
-		Sub Open()
-		  //
-		  // Allow the ghost window to automatically move
-		  // away from its master (default True)
-		  //
-		  AutoMoveGhostOnOpen = true
-		End Sub
-	#tag EndEvent
-
-
 #tag EndWindowCode
 
 #tag ViewBehavior
 	#tag ViewProperty
-		Name="Interfaces"
-		Visible=true
-		Group="ID"
-		Type="String"
-		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Name"
-		Visible=true
-		Group="ID"
-		Type="String"
-		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Super"
-		Visible=true
-		Group="ID"
-		Type="String"
-		EditorType="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Height"
-		Visible=true
-		Group="Size"
-		InitialValue="400"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MaxHeight"
-		Visible=true
-		Group="Size"
-		InitialValue="32000"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MaxWidth"
-		Visible=true
-		Group="Size"
-		InitialValue="32000"
-		Type="Integer"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MinHeight"
+		Name="MinimumWidth"
 		Visible=true
 		Group="Size"
 		InitialValue="64"
 		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="MinWidth"
+		Name="MinimumHeight"
 		Visible=true
 		Group="Size"
 		InitialValue="64"
 		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Width"
+		Name="MaximumWidth"
 		Visible=true
 		Group="Size"
-		InitialValue="600"
+		InitialValue="32000"
 		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="CloseButton"
+		Name="MaximumHeight"
 		Visible=true
-		Group="Frame"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
+		Group="Size"
+		InitialValue="32000"
+		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Frame"
+		Name="Type"
 		Visible=true
 		Group="Frame"
 		InitialValue="0"
-		Type="Integer"
+		Type="Types"
 		EditorType="Enum"
 		#tag EnumValues
 			"0 - Document"
@@ -446,86 +396,43 @@ End
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="FullScreenButton"
+		Name="HasCloseButton"
+		Visible=true
+		Group="Frame"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasMaximizeButton"
+		Visible=true
+		Group="Frame"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasMinimizeButton"
+		Visible=true
+		Group="Frame"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasFullScreenButton"
 		Visible=true
 		Group="Frame"
 		InitialValue="False"
 		Type="Boolean"
-		EditorType="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="MaximizeButton"
-		Visible=true
-		Group="Frame"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="MinimizeButton"
-		Visible=true
-		Group="Frame"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Resizeable"
-		Visible=true
-		Group="Frame"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Title"
-		Visible=true
-		Group="Frame"
-		InitialValue="Untitled"
-		Type="String"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="BackColor"
-		Visible=true
-		Group="Background"
-		InitialValue="&hFFFFFF"
-		Type="Color"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Backdrop"
-		Visible=true
-		Group="Background"
-		Type="Picture"
-		EditorType="Picture"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="HasBackColor"
-		Visible=true
-		Group="Background"
-		InitialValue="False"
-		Type="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="AutoMoveOnOpen"
-		Visible=true
-		Group="Behavior"
-		InitialValue="True"
-		Type="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="ImplicitInstance"
-		Visible=true
-		Group="Behavior"
-		InitialValue="True"
-		Type="Boolean"
-		EditorType="Boolean"
-	#tag EndViewProperty
-	#tag ViewProperty
-		Name="Placement"
+		Name="DefaultLocation"
 		Visible=true
 		Group="Behavior"
 		InitialValue="0"
-		Type="Integer"
+		Type="Locations"
 		EditorType="Enum"
 		#tag EnumValues
 			"0 - Default"
@@ -536,19 +443,84 @@ End
 		#tag EndEnumValues
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Visible"
+		Name="HasBackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="BackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+		EditorType="Color"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Background"
+		InitialValue=""
+		Type="Picture"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Composite"
+		Visible=false
+		Group="OS X (Carbon)"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="FullScreen"
+		Visible=false
+		Group="Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Size"
+		InitialValue="400"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="ImplicitInstance"
 		Visible=true
 		Group="Behavior"
 		InitialValue="True"
 		Type="Boolean"
-		EditorType="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Interfaces"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="MacProcID"
+		Visible=false
+		Group="OS X (Carbon)"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="MenuBar"
 		Visible=true
 		Group="Menus"
+		InitialValue=""
 		Type="MenuBar"
-		EditorType="MenuBar"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="MenuBarVisible"
@@ -556,32 +528,54 @@ End
 		Group="Deprecated"
 		InitialValue="True"
 		Type="Boolean"
-		EditorType="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="Composite"
-		Group="OS X (Carbon)"
-		InitialValue="False"
+		Name="Name"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Resizeable"
+		Visible=true
+		Group="Frame"
+		InitialValue="True"
 		Type="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="FullScreen"
-		Group="Behavior"
-		InitialValue="False"
-		Type="Boolean"
-		EditorType="Boolean"
+		Name="Super"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="LiveResize"
+		Name="Title"
+		Visible=true
+		Group="Frame"
+		InitialValue="Untitled"
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Visible"
+		Visible=true
 		Group="Behavior"
 		InitialValue="True"
 		Type="Boolean"
-		EditorType="Boolean"
+		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="MacProcID"
-		Group="OS X (Carbon)"
-		InitialValue="0"
+		Name="Width"
+		Visible=true
+		Group="Size"
+		InitialValue="600"
 		Type="Integer"
+		EditorType=""
 	#tag EndViewProperty
 #tag EndViewBehavior

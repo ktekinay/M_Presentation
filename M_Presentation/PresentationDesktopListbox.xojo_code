@@ -1,21 +1,36 @@
 #tag Class
-Class PresentationTextField
-Inherits TextField
+Class PresentationDesktopListbox
+Inherits DesktopListbox
 	#tag Event
-		Sub Open()
-		  self.TextSize = M_Presentation.FontSize
-		  RaiseEvent Open()
+		Sub Opening()
+		  self.FontSize = M_Presentation.FontSize
+		  DefaultRowHeight = M_Presentation.FontSize + 4
+		  RaiseEvent Opening()
 		  
 		End Sub
 	#tag EndEvent
 
 
 	#tag Hook, Flags = &h0
-		Event Open()
+		Event Opening()
 	#tag EndHook
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="GridLineStyle"
+			Visible=true
+			Group="Appearance"
+			InitialValue="0"
+			Type="GridLineStyles"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - None"
+				"1 - Horizontal"
+				"2 - Vertical"
+				"3 - Both"
+			#tag EndEnumValues
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AllowAutoDeactivate"
 			Visible=true
@@ -23,14 +38,6 @@ Inherits TextField
 			InitialValue="True"
 			Type="Boolean"
 			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BackgroundColor"
-			Visible=true
-			Group="Appearance"
-			InitialValue="&hFFFFFF"
-			Type="Color"
-			EditorType="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HasBorder"
@@ -41,12 +48,44 @@ Inherits TextField
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="HasHeader"
+			Visible=true
+			Group="Appearance"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Tooltip"
 			Visible=true
 			Group="Appearance"
 			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HasHorizontalScrollbar"
+			Visible=true
+			Group="Appearance"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HasVerticalScrollbar"
+			Visible=true
+			Group="Appearance"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="DropIndicatorVisible"
+			Visible=true
+			Group="Appearance"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AllowFocusRing"
@@ -88,15 +127,15 @@ Inherits TextField
 			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Hint"
+			Name="AllowAutoHideScrollbars"
 			Visible=true
-			Group="Initial State"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="AllowTabs"
+			Name="AllowResizableColumns"
 			Visible=true
 			Group="Behavior"
 			InitialValue="False"
@@ -104,42 +143,40 @@ Inherits TextField
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="TextAlignment"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="TextAlignments"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - Default"
-				"1 - Left"
-				"2 - Center"
-				"3 - Right"
-			#tag EndEnumValues
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AllowSpellChecking"
+			Name="AllowRowDragging"
 			Visible=true
 			Group="Behavior"
 			InitialValue="False"
-			Type="boolean"
+			Type="Boolean"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="MaximumCharactersAllowed"
+			Name="AllowRowReordering"
+			Visible=true
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="AllowExpandableRows"
+			Visible=true
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="RowSelectionType"
 			Visible=true
 			Group="Behavior"
 			InitialValue="0"
-			Type="Integer"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ValidationMask"
-			Visible=true
-			Group="Behavior"
-			InitialValue=""
-			Type="String"
-			EditorType=""
+			Type="RowSelectionTypes"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - Single"
+				"1 - Multiple"
+			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Transparent"
@@ -193,7 +230,7 @@ Inherits TextField
 			Name="Width"
 			Visible=true
 			Group="Position"
-			InitialValue="80"
+			InitialValue="100"
 			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty
@@ -201,7 +238,7 @@ Inherits TextField
 			Name="Height"
 			Visible=true
 			Group="Position"
-			InitialValue="22"
+			InitialValue="100"
 			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty
@@ -262,20 +299,12 @@ Inherits TextField
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Password"
+			Name="Visible"
 			Visible=true
 			Group="Appearance"
-			InitialValue=""
+			InitialValue="True"
 			Type="Boolean"
 			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="TextColor"
-			Visible=true
-			Group="Appearance"
-			InitialValue="&h000000"
-			Type="Color"
-			EditorType="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Enabled"
@@ -286,19 +315,59 @@ Inherits TextField
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Format"
+			Name="ColumnCount"
+			Visible=true
+			Group="Appearance"
+			InitialValue="1"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ColumnWidths"
 			Visible=true
 			Group="Appearance"
 			InitialValue=""
 			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="InitialValue"
+			Visible=true
+			Group="Appearance"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="HeadingIndex"
+			Visible=true
+			Group="Appearance"
+			InitialValue="-1"
+			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Visible"
+			Name="DefaultRowHeight"
 			Visible=true
 			Group="Appearance"
-			InitialValue="True"
-			Type="Boolean"
+			InitialValue="-1"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="_ScrollWidth"
+			Visible=false
+			Group="Appearance"
+			InitialValue="-1"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="_ScrollOffset"
+			Visible=false
+			Group="Appearance"
+			InitialValue="0"
+			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -326,36 +395,12 @@ Inherits TextField
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Text"
-			Visible=true
-			Group="Initial State"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ReadOnly"
+			Name="RequiresSelection"
 			Visible=true
 			Group="Behavior"
 			InitialValue=""
 			Type="Boolean"
 			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataSource"
-			Visible=true
-			Group="Database Binding"
-			InitialValue=""
-			Type="String"
-			EditorType="DataSource"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataField"
-			Visible=true
-			Group="Database Binding"
-			InitialValue=""
-			Type="String"
-			EditorType="DataField"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
