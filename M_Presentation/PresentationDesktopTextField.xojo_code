@@ -1,17 +1,17 @@
 #tag Class
-Class PresentationTextField
-Inherits TextField
+Class PresentationDesktopTextField
+Inherits DesktopTextField
 	#tag Event
-		Sub Open()
-		  self.TextSize = M_Presentation.FontSize
-		  RaiseEvent Open()
+		Sub Opening()
+		  self.FontSize = M_Presentation.FontSize
+		  RaiseEvent Opening()
 		  
 		End Sub
 	#tag EndEvent
 
 
 	#tag Hook, Flags = &h0
-		Event Open()
+		Event Opening()
 	#tag EndHook
 
 
