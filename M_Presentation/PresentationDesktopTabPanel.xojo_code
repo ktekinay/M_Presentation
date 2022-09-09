@@ -255,14 +255,6 @@ Inherits DesktopTabPanel
 			Type="Boolean"
 			EditorType=""
 		#tag EndViewProperty
-		#tag ViewProperty
-			Name="InitialParent"
-			Visible=false
-			Group=""
-			InitialValue=""
-			Type="String"
-			EditorType=""
-		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
 #tag EndClass

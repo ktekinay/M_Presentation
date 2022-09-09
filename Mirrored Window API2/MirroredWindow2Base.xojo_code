@@ -24,13 +24,13 @@ Inherits DesktopWindow
 		  
 		  IgnoreActivate = false
 		  
-		  RaiseEvent Activate
+		  RaiseEvent Activated
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub Closing()
-		  RaiseEvent Close()
+		  RaiseEvent Closing()
 		  
 		  if GhostUpdater isa object then
 		    GhostUpdater.Mode = Timer.ModeOff
@@ -38,7 +38,7 @@ Inherits DesktopWindow
 		    GhostUpdater = nil
 		  end if
 		  
-		  if Ghost isa GhostWindow then
+		  if Ghost isa GhostWindow2 then
 		    Ghost.Close
 		    Ghost = nil
 		  end if
@@ -49,14 +49,14 @@ Inherits DesktopWindow
 		  dim closeIt as boolean = true // Assume we will
 		  dim lastWindowIndex as integer = WindowCount - 1
 		  for i as integer = 0 to lastWindowIndex
-		    if Window( i ) isa GhostWindow then
+		    if Window( i ) isa GhostWindow2 then
 		      closeIt = false
 		      exit
 		    end if
 		  next
 		  
 		  if closeIt then
-		    GhostScaleWindow.Close
+		    GhostScaleWindow2.Close
 		  end if
 		  
 		End Sub
@@ -68,7 +68,7 @@ Inherits DesktopWindow
 		    return
 		  end if
 		  
-		  RaiseEvent Deactivate
+		  RaiseEvent Deactivated
 		  
 		  IsActive = false
 		End Sub
@@ -87,7 +87,7 @@ Inherits DesktopWindow
 		  
 		  IsActive = true
 		  
-		  RaiseEvent Open()
+		  RaiseEvent Opening()
 		  
 		End Sub
 	#tag EndEvent
@@ -128,7 +128,7 @@ Inherits DesktopWindow
 		Private Sub GhostUpdater_Action(sender As Timer)
 		  #pragma unused sender
 		  
-		  if Ghost isa GhostWindow then
+		  if Ghost isa GhostWindow2 then
 		    Ghost.Title = self.Title
 		    
 		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
@@ -148,19 +148,19 @@ Inherits DesktopWindow
 
 
 	#tag Hook, Flags = &h0
-		Event Activate()
+		Event Activated()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event Close()
+		Event Closing()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event Deactivate()
+		Event Deactivated()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event Open()
+		Event Opening()
 	#tag EndHook
 
 
@@ -305,8 +305,8 @@ Inherits DesktopWindow
 			Visible=true
 			Group="Background"
 			InitialValue="&hFFFFFF"
-			Type="Color"
-			EditorType="Color"
+			Type="ColorGroup"
+			EditorType="ColorGroup"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Backdrop"
@@ -369,7 +369,7 @@ Inherits DesktopWindow
 			Visible=true
 			Group="Menus"
 			InitialValue=""
-			Type="MenuBar"
+			Type="DesktopMenuBar"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty

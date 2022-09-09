@@ -29,8 +29,8 @@ Inherits DesktopTextField
 			Visible=true
 			Group="Appearance"
 			InitialValue="&hFFFFFF"
-			Type="Color"
-			EditorType="Color"
+			Type="ColorGroup"
+			EditorType="ColorGroup"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HasBorder"
@@ -274,8 +274,8 @@ Inherits DesktopTextField
 			Visible=true
 			Group="Appearance"
 			InitialValue="&h000000"
-			Type="Color"
-			EditorType="Color"
+			Type="ColorGroup"
+			EditorType="ColorGroup"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Enabled"
@@ -340,22 +340,6 @@ Inherits DesktopTextField
 			InitialValue=""
 			Type="Boolean"
 			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataSource"
-			Visible=true
-			Group="Database Binding"
-			InitialValue=""
-			Type="String"
-			EditorType="DataSource"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataField"
-			Visible=true
-			Group="Database Binding"
-			InitialValue=""
-			Type="String"
-			EditorType="DataField"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
