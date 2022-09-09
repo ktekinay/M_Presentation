@@ -33,8 +33,8 @@ End
 		  #pragma unused areas
 		  
 		  if GhostImage isa Picture then
-		    self.Width = (GhostImage.Width / GhostImage.Graphics.ScaleX) * GhostScaleWindow.Scale
-		    self.Height = (GhostImage.Height / GhostImage.Graphics.ScaleY) * GhostScaleWindow.Scale
+		    self.Width = (GhostImage.Width / GhostImage.Graphics.ScaleX) * GhostScaleWindow2.Scale
+		    self.Height = (GhostImage.Height / GhostImage.Graphics.ScaleY) * GhostScaleWindow2.Scale
 		    g.DrawPicture(GhostImage, 0, 0, g.Width, g.Height, 0, 0, GhostImage.Width, GhostImage.Height)
 		  end if
 		  
@@ -163,8 +163,8 @@ End
 		Visible=true
 		Group="Background"
 		InitialValue="&hFFFFFF"
-		Type="Color"
-		EditorType="Color"
+		Type="ColorGroup"
+		EditorType="ColorGroup"
 	#tag EndViewProperty
 	#tag ViewProperty
 		Name="Backdrop"
@@ -235,7 +235,7 @@ End
 		Visible=true
 		Group="Menus"
 		InitialValue=""
-		Type="MenuBar"
+		Type="DesktopMenuBar"
 		EditorType=""
 	#tag EndViewProperty
 	#tag ViewProperty

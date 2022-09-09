@@ -29,8 +29,8 @@ Inherits DesktopTextArea
 			Visible=true
 			Group="Appearance"
 			InitialValue="&hFFFFFF"
-			Type="Color"
-			EditorType="Color"
+			Type="ColorGroup"
+			EditorType="ColorGroup"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HasBorder"
@@ -162,7 +162,7 @@ Inherits DesktopTextArea
 			Visible=true
 			Group="Selection Behavior"
 			InitialValue="0"
-			Type="TextArea.UnicodeModes"
+			Type="DesktopTextArea.UnicodeModes"
 			EditorType="Enum"
 			#tag EnumValues
 				"0 - Native"
@@ -327,8 +327,8 @@ Inherits DesktopTextArea
 			Visible=true
 			Group="Appearance"
 			InitialValue="&h000000"
-			Type="Color"
-			EditorType="Color"
+			Type="ColorGroup"
+			EditorType="ColorGroup"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Enabled"
@@ -393,22 +393,6 @@ Inherits DesktopTextArea
 			InitialValue=""
 			Type="Boolean"
 			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataSource"
-			Visible=true
-			Group="Database Binding"
-			InitialValue=""
-			Type="String"
-			EditorType="DataSource"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="DataField"
-			Visible=true
-			Group="Database Binding"
-			InitialValue=""
-			Type="String"
-			EditorType="DataField"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
