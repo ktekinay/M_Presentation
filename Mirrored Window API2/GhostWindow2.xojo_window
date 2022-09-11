@@ -33,8 +33,24 @@ End
 		  #pragma unused areas
 		  
 		  if GhostImage isa Picture then
-		    self.Width = (GhostImage.Width / GhostImage.Graphics.ScaleX) * GhostScaleWindow2.Scale
-		    self.Height = (GhostImage.Height / GhostImage.Graphics.ScaleY) * GhostScaleWindow2.Scale
+		    System.DebugLog "Updating ghost of " + self.Title
+		    
+		    dim newWidth as integer = ( GhostImage.Width / GhostImage.Graphics.ScaleX ) * GhostScaleWindow2.Scale
+		    dim newHeight as integer = ( GhostImage.Height / GhostImage.Graphics.ScaleY ) * GhostScaleWindow2.Scale
+		    if newWidth <> LastWidth then
+		      LastWidth = newWidth
+		      self.Width = newWidth
+		    end if
+		    if newHeight <> LastHeight then
+		      LastHeight = newHeight
+		      self.Height = newHeight
+		    end if
+		    
+		    //
+		    // If we don't ClearRect first, we sometimes
+		    // get a black background and it makes us sad.
+		    //
+		    g.ClearRect 0, 0, g.Width, g.Height
 		    g.DrawPicture(GhostImage, 0, 0, g.Width, g.Height, 0, 0, GhostImage.Width, GhostImage.Height)
 		  end if
 		  
@@ -44,6 +60,14 @@ End
 
 	#tag Property, Flags = &h0
 		GhostImage As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastHeight As Integer = -1
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastWidth As Integer = -1
 	#tag EndProperty
 
 

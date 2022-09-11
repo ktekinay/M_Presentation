@@ -89,6 +89,47 @@ Inherits DesktopWindow
 		  
 		  RaiseEvent Opening()
 		  
+		  if AutoMoveGhostOnOpen then
+		    //
+		    // Move the ghost window to somewhere more logical
+		    //
+		    dim newLeft as integer
+		    dim newTop as integer
+		    
+		    if ScreenCount > 1 then
+		      newLeft = Screen( 1 ).Left + self.Left
+		      newTop = Screen( 1 ).Top + self.Top
+		    else
+		      newLeft = self.Left + self.Width + 20
+		    end if
+		    
+		    //
+		    // Make sure it's still visible
+		    //
+		    if newLeft < ( Screen( 0 ).Width - 10 ) and newTop < ( Screen( 0 ).Height - 10 ) then
+		      Ghost.Left = newLeft
+		      Ghost.Top = newTop
+		    end if
+		  end if
+		  
+		  //
+		  // Move the controls
+		  //
+		  if true then
+		    dim newTop as integer = GhostScaleWindow2.Top
+		    dim newLeft as integer = self.Left + self.Width + 20
+		    
+		    if newLeft >= ( Screen( 0 ).Width - 10 ) then
+		      newLeft = GhostScaleWindow2.Left
+		      newTop = self.Top + self.Height + 20
+		    end if
+		    
+		    if newTop <= ( Screen( 0 ).Height - 10 ) then
+		      GhostScaleWindow2.Left = newLeft
+		      GhostScaleWindow2.Top = newTop
+		    end if
+		  end if
+		  
 		End Sub
 	#tag EndEvent
 
@@ -129,7 +170,9 @@ Inherits DesktopWindow
 		  #pragma unused sender
 		  
 		  if Ghost isa GhostWindow2 then
-		    Ghost.Title = self.Title
+		    if Ghost.Title <> self.Title then
+		      Ghost.Title = self.Title
+		    end if
 		    
 		    dim p as Picture = self.BitmapForCaching( self.Width, self.Height )
 		    self.DrawInto p.Graphics, 0, 0
@@ -139,8 +182,19 @@ Inherits DesktopWindow
 		    //
 		    DrawCursor p.Graphics
 		    
-		    Ghost.GhostImage = p
-		    Ghost.Refresh
+		    //
+		    // Check to see if Ghost.Invalidate is necessary.
+		    // We do this here because, once we call Invalidate,
+		    // the Ghost must draw *something* or it will go blank.
+		    //
+		    dim currentScale as double = GhostScaleWindow2.Scale
+		    
+		    if currentScale <> LastScale or not M_Presentation.IsSamePicture( p, LastImage ) then
+		      LastScale = currentScale
+		      LastImage = p
+		      Ghost.GhostImage = p
+		      Ghost.Refresh
+		    end if
 		  end if
 		  
 		End Sub
@@ -164,6 +218,10 @@ Inherits DesktopWindow
 	#tag EndHook
 
 
+	#tag Property, Flags = &h0
+		AutoMoveGhostOnOpen As Boolean
+	#tag EndProperty
+
 	#tag Property, Flags = &h21
 		Private Ghost As GhostWindow2
 	#tag EndProperty
@@ -180,6 +238,14 @@ Inherits DesktopWindow
 		Private IsActive As Boolean
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private LastImage As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private LastScale As Double = -1.0
+	#tag EndProperty
+
 
 	#tag Constant, Name = kMouseDiameter, Type = Double, Dynamic = False, Default = \"12", Scope = Private
 	#tag EndConstant
@@ -192,6 +258,30 @@ Inherits DesktopWindow
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="Interfaces"
+			Visible=true
+			Group="ID"
+			InitialValue=""
+			Type="String"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Name"
+			Visible=true
+			Group="ID"
+			InitialValue=""
+			Type="String"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Super"
+			Visible=true
+			Group="ID"
+			InitialValue=""
+			Type="String"
+			EditorType=""
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="MinimumWidth"
 			Visible=true
@@ -221,6 +311,22 @@ Inherits DesktopWindow
 			Visible=true
 			Group="Size"
 			InitialValue="32000"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Height"
+			Visible=true
+			Group="Size"
+			InitialValue="400"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Width"
+			Visible=true
+			Group="Size"
+			InitialValue="600"
 			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty
@@ -278,19 +384,20 @@ Inherits DesktopWindow
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="DefaultLocation"
+			Name="Resizeable"
 			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="Locations"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - Default"
-				"1 - Parent Window"
-				"2 - Main Screen"
-				"3 - Parent Window Screen"
-				"4 - Stagger"
-			#tag EndEnumValues
+			Group="Frame"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Title"
+			Visible=true
+			Group="Frame"
+			InitialValue="Untitled"
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HasBackgroundColor"
@@ -317,28 +424,19 @@ Inherits DesktopWindow
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Composite"
-			Visible=false
-			Group="OS X (Carbon)"
-			InitialValue="False"
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="FullScreen"
-			Visible=false
-			Group="Behavior"
-			InitialValue="False"
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Height"
+			Name="DefaultLocation"
 			Visible=true
-			Group="Size"
-			InitialValue="400"
-			Type="Integer"
-			EditorType=""
+			Group="Behavior"
+			InitialValue="0"
+			Type="Locations"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - Default"
+				"1 - Parent Window"
+				"2 - Main Screen"
+				"3 - Parent Window Screen"
+				"4 - Stagger"
+			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ImplicitInstance"
@@ -349,19 +447,35 @@ Inherits DesktopWindow
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Interfaces"
+			Name="Visible"
 			Visible=true
-			Group="ID"
-			InitialValue=""
-			Type="String"
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="MacProcID"
+			Name="AutoMoveGhostOnOpen"
+			Visible=true
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="LastImage"
 			Visible=false
-			Group="OS X (Carbon)"
-			InitialValue="0"
-			Type="Integer"
+			Group="Behavior"
+			InitialValue=""
+			Type="Picture"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="LastScale"
+			Visible=false
+			Group="Behavior"
+			InitialValue="-1.0"
+			Type="Double"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -381,50 +495,26 @@ Inherits DesktopWindow
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Name"
-			Visible=true
-			Group="ID"
-			InitialValue=""
-			Type="String"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Resizeable"
-			Visible=true
-			Group="Frame"
-			InitialValue="True"
+			Name="Composite"
+			Visible=false
+			Group="OS X (Carbon)"
+			InitialValue="False"
 			Type="Boolean"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Super"
-			Visible=true
-			Group="ID"
-			InitialValue=""
-			Type="String"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Title"
-			Visible=true
-			Group="Frame"
-			InitialValue="Untitled"
-			Type="String"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Visible"
-			Visible=true
+			Name="FullScreen"
+			Visible=false
 			Group="Behavior"
-			InitialValue="True"
+			InitialValue="False"
 			Type="Boolean"
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Width"
-			Visible=true
-			Group="Size"
-			InitialValue="600"
+			Name="MacProcID"
+			Visible=false
+			Group="OS X (Carbon)"
+			InitialValue="0"
 			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty
